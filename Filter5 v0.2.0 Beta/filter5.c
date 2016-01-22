@@ -1,4 +1,4 @@
-// Filter5 version 0.1.0 Beta -- G Colburn 2016
+// Filter5 version 0.2.0 Beta -- G Colburn 2016
 
 /* Filter5 is written by G Colburn 2016 -- You may use this source only when giving credit as follows:
 ** You must give appropriate credit, provide a link to the source, and indicate if changes were made. You may
@@ -16,6 +16,8 @@
 ** a web server access point may indicate a potential threat, a system attempting access through mutliple
 ** services tends to show initiative of a malicious attempt. This program was written to deal more with
 ** that circumstance.
+**
+** This header note must stay with the source file, Thanks.
 */
 
 #include <stdio.h>
