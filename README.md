@@ -23,7 +23,7 @@ NAME
 	Filter5 - Log compiler and filtration
 
 SYNOPSIS
-	Filter5 [-option] (only accepts one option flag per run)
+	Filter5 -option (only accepts one option flag per run)
 
 DESCRIPTION
 	Filter5 - The intention of Filter5 is to eliminate some of the attempts to compromise 
@@ -37,6 +37,8 @@ DESCRIPTION
 	Latest source should be available on github @ https://github.com/thepony/filter5
 
 OPTIONS
+
+
 	-b	Displays any duplicate cross matched IPs, does not add ban or execute a system 
 		request to activate firewall settings.
 
