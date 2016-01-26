@@ -61,6 +61,6 @@ AUTHOR
 	Greg Colburn
 	
 Support my coding by bitcoin if you like this
-(my copious habit of caffine and chips while coding sucks)
+(my consumption of caffine and chips while coding sucks)
 
 1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
