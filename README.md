@@ -1,9 +1,12 @@
+# filter5
+Scans through Apache and SSH logs with the intention of identifying potential full out attempts at compromising a webserver/system
+I came up with this after a few frustrating hours of bouncing between logs trying to match up IPs seeing who was screwing
+with what on a honeypot server I use to analyze and learn with. Old but new, I put down I.T. and Coding years back and just
+getting a chance to get back into it again... and feel just as clueless as before :-)
+
+
 Filter5 	User Manual Version 0.3.2 
 
-Support my coding by bitcoin if you like this
-(my copious habit of caffine and chips while coding sucks)
-
-1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
 
 You may use this source only when giving credit as follows:
   You must give appropriate credit, provide a link to the source, and indicate if changes 
@@ -16,7 +19,7 @@ NAME
 	Filter5 - Log compiler and filtration
 
 SYNOPSIS
-	Filter5 [-option] (only accepts one option flag per run)
+	Filter5 -option (only accepts one option flag per run)
 
 DESCRIPTION
 	Filter5 - The intention of Filter5 is to eliminate some of the attempts to compromise 
@@ -30,6 +33,8 @@ DESCRIPTION
 	Latest source should be available on github @ https://github.com/thepony/filter5
 
 OPTIONS
+
+
 	-b	Displays any duplicate cross matched IPs, does not add ban or execute a system 
 		request to activate firewall settings.
 
@@ -43,10 +48,6 @@ OPTIONS
 		(In any other mode the temp files are created but removed before program 
 		exits). Does not process any further info or bans. This is essentially
 		a dirty exit after gathering data.
-		
-	-d	Checks duplicates in each logfile by themselves in addition to cross checking
-		logs. This feature does not institute ban rules when passing arguments through
-		the single file dupe checks.
 
 FILES
 	Reads from /var/log/apache2/error.log, /var/log/apache2/access.log, and /var/log/auth.log files and 
@@ -58,5 +59,8 @@ BUGS
 
 AUTHOR
 	Greg Colburn
+	
+Support my coding by bitcoin if you like this
+(my consumption of caffine and chips while coding sucks)
 
-
+1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
