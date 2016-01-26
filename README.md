@@ -5,7 +5,7 @@ with what on a honeypot server I use to analyze and learn with. Old but new, I p
 getting a chance to get back into it again... and feel just as clueless as before :-)
 
 
-Filter5 	User Manual Version 0.3.3 
+Filter5 	User Manual Version 0.3.3
 
 
 You may use this source only when giving credit as follows:
@@ -63,6 +63,10 @@ FILES
 	when using the -L flag.
 BUGS
 	Please report bugs to thepony on github https://github.com/thepony/filter5
+	
+HISTORY
+	For historical purposes (if one is really needed??) I have added a archive folder of the older versions
+	of filter5. I doubt there is any value added by doing this but they were added anyway.
 
 AUTHOR
 	Greg Colburn
