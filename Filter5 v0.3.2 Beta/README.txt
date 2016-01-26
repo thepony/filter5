@@ -43,6 +43,10 @@ OPTIONS
 		(In any other mode the temp files are created but removed before program 
 		exits). Does not process any further info or bans. This is essentially
 		a dirty exit after gathering data.
+		
+	-d	Checks duplicates in each logfile by themselves in addition to cross checking
+		logs. This feature does not institute ban rules when passing arguments through
+		the single file dupe checks.
 
 FILES
 	Reads from /var/log/apache2/error.log, /var/log/apache2/access.log, and /var/log/auth.log files and 
