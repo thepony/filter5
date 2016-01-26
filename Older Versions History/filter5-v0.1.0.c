@@ -1,13 +1,13 @@
-// Filter5 Beta -- G Colburn 2016
+// Filter5 version 0.1.0 Beta -- G Colburn 2016
 
 /* Filter5 is written by G Colburn 2016 -- You may use this source only when giving credit as follows:
 ** You must give appropriate credit, provide a link to the source, and indicate if changes were made. You may
 ** do so in any reasonable manner, but not in any way that suggests the creator endorses you or your use. you
-** may not distribute this source without contacting the creator (I just wanna know where its going if
+** may not distribute this source without contacting the creator (I just wanna know where its going if 
 ** it goes anywhere :] thank you!)
 **
 ** Donations welcome via bitcoin: 1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
-** (Just helps me find chips and caffine while coding!)
+** (Just helps me find food and caffine while coding!)
 */
 
 /* Filter5 is a simple method of pulling and examining Apache's error and access logs and cross referencing
@@ -26,17 +26,6 @@
 FILE *fr;
 FILE *loggs;
 FILE *ban;
-
-char *version = "Version 0.3.2";
-
-int matchMax = 3;
-int banfindTest = 0;
-
-int iFind = 0; //-- general counter
-int killitwithFire = 1; // 0 false, 1 true -- set the ban action
-int gimmieNumbers = 0; // Print total finds from logs
-int banlogON = 1; // option to turn off logging
-char processed[256] = "ipset -quiet -A BLACKLIST ";
 
 int banfind = 0;
 int unixtime;
@@ -75,15 +64,10 @@ void errorlog() {
 			s = strtok(s, " ");
 		        s = strtok(s, ":");
 		        fprintf(loggs, "%s\n", s);
-		        if (gimmieNumbers == 1) ++iFind;
 		}
 	}
 	fclose(fr);
 	fclose(loggs);
-	if (gimmieNumbers == 1) {
-		printf("Error Log Total: %d\n", iFind);
-		iFind = 0;
-	}
   }
 
 // -- Search access.log for 4XX's
@@ -94,15 +78,10 @@ void accesslog() {
         	if (strstr(line, accessKey1) || strstr(line, accessKey2) || strstr(line, accessKey3) || strstr(line, accessKey4)) {
                 	s = strtok(line, "-");
                         fprintf(loggs, "%s\n", s);
-                        if (gimmieNumbers == 1) ++iFind;
                 }
         }
         fclose(fr);
         fclose(loggs);
-        if (gimmieNumbers == 1) {
-        	printf("Access Log Total: %d\n", iFind);
-        	iFind = 0;
-        }
   }
 
 // -- Seach auth.log for failed logins
@@ -115,22 +94,18 @@ void authlog() {
         		s = strstr(s, " ");
         		s = strtok(s, " ");
         		fprintf(loggs, "%s\n", s);
-        		if (gimmieNumbers == 1) ++iFind;
         	}
         }
         fclose(fr);
         fclose(loggs);
-        if (gimmieNumbers == 1) {
-        	printf("Auth Log Total: %d\n\n", iFind);
-        	iFind = 0;
-        }
   }
 
 // -- Tests a file for a matching IP from filename filename (used inside creatban())
 // -- Appends ban list with count total of any ip cross-matched
-void test(char line3[50], char *filename) {
+void test(char line3[256], char *filename) {
 	loggs = fopen(filename, "r");
-	if (banlogON == 1) ban = fopen(banlog, "a+");
+	ban = fopen(banlog, "a+");
+
 	int len = strlen(line3);
 	line3[len - 2] = '\0';
 	while (fgets(line2, 256, loggs) != NULL) {
@@ -140,51 +115,20 @@ void test(char line3[50], char *filename) {
 			banfind++;
 		}
 	}
-	if (banfind > banfindTest) {
-		printf("\nMatch: %s\t%d times", line3, banfind);
-		if (killitwithFire == 0 || banfind < matchMax) { fprintf(ban, "%s\t%d\n", line3, banfind); }
-
-		if (killitwithFire == 1 && banfind >= matchMax) {
-			if (banlogON == 1) fprintf(ban, "%s\t%d <<--->> BAN BY CONFIG!\n", line3, banfind);
-			printf(" <<--->> Processing Ban for %s per config!", line3);
-			strcat(processed, line3);
-			system(processed);
-		}
+	if (banfind > 0) {
+		printf("Match: %s\t%d times\n", line3, banfind);
+		fprintf(ban, "%s\t%d\n", line3, banfind);
 	}
+
 	fclose(loggs);
-	if (banlogON == 1) fclose(ban);
+	fclose(ban);
 	banfind = 0;
-  }
 
-void dupeTest() {
-	int savekillitFire = killitwithFire;
-	killitwithFire = 0; // disable the banning before running this!!
-	banfindTest = 2; // Tighten the filter matches in test()
-	char *cdupe;
-	char *checkfile;
-	int i;
-	printf("Single log duplicate check...");
-	for (i = 0; i < 3; i++) {
-		if (i == 0) checkfile = tempauth;
-		if (i == 1) checkfile = tempaccess;
-		if (i == 2) checkfile = temperror;
-		printf("\nChecking %s...", checkfile);
-		fr = fopen(checkfile, "r");
-		while(fgets(line, 256, fr) != NULL) {
-			test(line, checkfile);
-		}
-		fclose(fr);
-	}
-	killitwithFire = savekillitFire; // restore killitwithfire before leaving scope
-	banfindTest = 0; // put the filter limits back to 0 for test()
 }
-
-
 
 // Rolls through the IPs pulled in auth.log and error.log and compared to 4XXs ips from access.log
 void creatban() {
 	int counter = 0;
-	printf("\n\nCross log duplicate checks...");
 	fr = fopen(tempauth, "r");
 	while(fgets(line, 256, fr) != NULL) {
 		test(line, tempaccess);
@@ -201,64 +145,22 @@ void creatban() {
   }
 
 
-void openLog(char *arg1) {
-	ban = fopen(banlog, "a+");
-	fprintf(ban, "\n[Filter5 Start Flag: %s  at  UT: %d ]\n", arg1, (int)time(NULL));
-	fclose(ban);
-  }
-
-void removeTmp() {
-	printf("\n\nSweeping the floor of debris......");
-	system("rm tmpau.log tmpac.log tmper.log");
-	printf("  done");
-  }
-
 // -- Runs the above mentioned things to find the cross referenced IPs
 // -- Not always but most likely a match is an attempt to compromise
 // -- the system or find a weakened state of entry.
-int main(int argc, char* argv[]) {
-	openLog(argv[1]);
-	if (argv[1] == NULL) { // -- No args first otherwise crashes!!
-		errorlog();
-		accesslog();
-		authlog();
-		//dupeTest();
-		creatban();
-		removeTmp();
-		return 0;
-	}
-
-	//-- ARG Value Section --//
-	//-- ARG Value Section --//
-	if (strstr(argv[1], "-L")) { //-- create tmp logs and exit dirty
-		printf("Starting with -L (create tmp logs and exit dirty!) flag!\n");
-		errorlog();
-		accesslog();
-		authlog();
-		return 0;
-	}
-	else if (strstr(argv[1], "-v")) { //-- Version and Exit
-		printf("Filter5 %s", version);
-		return 0;
-	}
-	else if (strstr(argv[1], "-l")) { //-- Do not log finds in the banlist.log
-		printf("Starting with -l (disabled banlist.log logging!!!) flag!\n");
-		banlogON = 0;
-	}
-	else if (strstr(argv[1], "-b")) { //-- No Ban (just find matches, build banlist.log and exit)
-		printf("Starting with -b (no ban) flag!\n");
-		killitwithFire = 0;
-	}
-	else if (strstr(argv[1], "-n")) {
-		printf("Starting with -n (Gimmie the numbers!) flag!\n");
-		gimmieNumbers = 1;
-	}
+int main() {
 	errorlog();
 	accesslog();
 	authlog();
-	if (strstr(argv[1], "-d")) dupeTest();
-	creatban();
-	removeTmp();
-	return 0;
 
+	ban = fopen(banlog, "a+");
+	fprintf(ban, "\n[Filter Started @ %d]\n", (int)time(NULL));
+	fclose(ban);
+	creatban();
+
+	// -- Since the temp files are just that, I clean them out after each run!
+	printf("\n\nSweeping the floor of debris......");
+	system("rm tmpau.log tmpac.log tmper.log");
+	printf("  done");
+	return 0;
 }
