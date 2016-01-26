@@ -5,7 +5,7 @@ with what on a honeypot server I use to analyze and learn with. Old but new, I p
 getting a chance to get back into it again... and feel just as clueless as before :-)
 
 
-Filter5 	User Manual Version 0.3.2 
+Filter5 	User Manual Version 0.3.3 
 
 
 You may use this source only when giving credit as follows:
@@ -48,6 +48,13 @@ OPTIONS
 		(In any other mode the temp files are created but removed before program 
 		exits). Does not process any further info or bans. This is essentially
 		a dirty exit after gathering data.
+		
+	-d	Checks for multiple instances in each log file checked. Does not apply the rule/table
+		for the additional findings.
+		
+	-x	Same as -d only adds the ban rule !! Warning !! This is glitchy at best and creates a
+		segmentation fault if the value used (int dd) contains too low a number, have not yet
+		found a valid way to sort this yet in c ... comments welcome?!
 
 FILES
 	Reads from /var/log/apache2/error.log, /var/log/apache2/access.log, and /var/log/auth.log files and 
