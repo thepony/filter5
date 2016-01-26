@@ -7,10 +7,6 @@ getting a chance to get back into it again... and feel just as clueless as befor
 
 Filter5 	User Manual Version 0.3.2 
 
-Support my coding by bitcoin if you like this
-(my copious habit of caffine and chips while coding sucks)
-
-1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
 
 You may use this source only when giving credit as follows:
   You must give appropriate credit, provide a link to the source, and indicate if changes 
@@ -63,3 +59,8 @@ BUGS
 
 AUTHOR
 	Greg Colburn
+	
+Support my coding by bitcoin if you like this
+(my copious habit of caffine and chips while coding sucks)
+
+1K6hdkYQthme7o1eTp9bjKhY1jQikrS7VQ
